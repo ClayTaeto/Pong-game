@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CodeControl;
 
 public class Ball : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class Ball : MonoBehaviour
     public Vector2 direction;
     public Text scoreboard1;
     //public Text scoreboard2;
-
     private int Paddle1score = 0;
     private int Paddle2score = 0;
+
     void Start()
     {
         direction = Vector2.one.normalized;
@@ -37,9 +38,10 @@ public class Ball : MonoBehaviour
 
         if (transform.position.x < GameManager.bottomLeft.x + radius && direction.x < 0)
         {
-           
-            
-            Paddle1score++;
+
+
+            //Paddle1score++;
+            Message.Send(new PointScored("Paddle1"));
             if (Paddle1score == 5)
             {
                 Debug.Log("Right player wins!!");
@@ -51,9 +53,10 @@ public class Ball : MonoBehaviour
         }
         if (transform.position.x > GameManager.topRight.x - radius && direction.x > 0)
         {
-            
-            
-            Paddle2score++;
+
+
+            //Paddle2score++;
+            Message.Send(new PointScored("Paddle2"));
             if (Paddle2score == 5)
             {
                 Debug.Log("Left player wins!!");
@@ -63,7 +66,7 @@ public class Ball : MonoBehaviour
             this.transform.position = new Vector3(0f, 0f, 0f);
         }
         print(Paddle1score + "," + Paddle2score);
-        scoreboard1.text = Paddle2score.ToString() + "      "+ Paddle1score.ToString();
+//        scoreboard1.text = Paddle2score.ToString() + "      "+ Paddle1score.ToString();
 
     }
     void OnTriggerEnter2D(Collider2D other)
